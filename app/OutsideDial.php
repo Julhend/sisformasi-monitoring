@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class OutsideDialMicrometer extends Model
+class OutsideDial extends Model
 {
      protected $table = 'calibrasi_outside_dial_micrometer';
       protected $guarded = ['id'];

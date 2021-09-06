@@ -32,7 +32,7 @@
                         <div class="colum"> 
                         <div class="form-group">
                             <label >Tool Name</label>
-                            <input type="text" class="form-control" id="tool_name" name="tool_name"  autofocus required>
+                            <input type="text" class="form-control" id="tool_name" name="tool_name" value="Digital Calipers" autofocus required>
                             <span class="help-block with-errors"></span>
                         </div>
                         <div class="form-group">

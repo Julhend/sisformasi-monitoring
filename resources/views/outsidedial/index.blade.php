@@ -10,9 +10,9 @@
     <div class="box">
 
         <div class="box-header">
-            <h3 class="box-title">Data Alat Ukur Digital Caliper</h3>
+            <h3 class="box-title">Data Alat Ukur Outside Dial Micrometer</h3>
 
-            <a onclick="addForm()" class="btn btn-primary pull-right" style="margin-top: -8px;">Add Digital Caliper</a>
+            <a onclick="addForm()" class="btn btn-primary pull-right" style="margin-top: -8px;">Add Outside Dial Micrometer</a>
         </div>
 
 
@@ -29,9 +29,9 @@
                     <th>Date Cal</th>
                     <th>Next Cal</th>
                     <th>Disposition</th>
-                    <th>Approved By</th>
                     <th>Checked By</th>
-                     <th>Action</th>
+                    <th>Approved By</th>
+                    <th>Action</th>
                 </tr>
                 </thead>
                 <tbody></tbody>
@@ -40,7 +40,7 @@
         <!-- /.box-body -->
     </div>
 
-    @include('digitalcaliper.form')
+    @include('outsidedial.form')
 
 @endsection
 
@@ -56,7 +56,7 @@
         var table = $('#products-table').DataTable({
             processing: true,
             serverSide: true,
-            ajax: "{{ route('api.digitalcaliper') }}",
+            ajax: "{{ route('api.outsidedial') }}",
             columns: [
                 {data: 'id', name: 'id'},
                 {data: 'tool_name', name: 'tool_name'},
@@ -66,8 +66,8 @@
                 {data: 'date_cal', name: 'date_cal'},
                 {data: 'next_cal', name: 'next_cal'},
                 {data: 'disposition', name: 'disposition'},
-                {data: 'approved_by', name: 'approved_by'},
                 {data: 'checked_by', name: 'checked_by'},
+                {data: 'approved_by', name: 'approved_by'},
                 {data: 'action', name: 'action', orderable: false, searchable: false}
             ]
         });
@@ -77,7 +77,7 @@
             $('input[name=_method]').val('POST');
             $('#modal-form').modal('show');
             $('#modal-form form')[0].reset();
-            $('.modal-title').text('Add Digital Calipers');
+            $('.modal-title').text('Add Outside Dial Micrometer');
         }
 
         function editForm(id) {
@@ -85,12 +85,12 @@
             $('input[name=_method]').val('PATCH');
             $('#modal-form form')[0].reset();
             $.ajax({
-                url: "{{ url('digitalcaliper') }}" + '/' + id + "/edit",
+                url: "{{ url('outsidedial') }}" + '/' + id + "/edit",
                 type: "GET",
                 dataType: "JSON",
                 success: function(data) {
                     $('#modal-form').modal('show');
-                    $('.modal-title').text('Edit Digital Calipers');
+                    $('.modal-title').text('Edit Outside Dial Micrometer');
                     $('#id').val(data.id);
                     $('#tool_name').val(data.tool_name);
                     $('#serial_number').val(data.serial_number);
@@ -110,19 +110,18 @@
                     $('#measured_value9').val(data.measured_value9);
                     $('#measured_value10').val(data.measured_value10);
                     $('#measured_value11').val(data.measured_value11);
-                    $('#measured_value12').val(data.measured_value12);
-                    $('#error1').val(data.error1);
-                    $('#error2').val(data.error2);
-                    $('#error3').val(data.error3);
-                    $('#error4').val(data.error4);
-                    $('#error5').val(data.error5);
-                    $('#error6').val(data.error6);
-                    $('#error7').val(data.error7);
-                    $('#error8').val(data.error8);
-                    $('#error9').val(data.error9);
-                    $('#error10').val(data.error10);
-                    $('#error11').val(data.error12);
-                    $('#error12').val(data.error12);
+                    $('#deviation1').val(data.deviation1);
+                    $('#deviation2').val(data.deviation2);
+                    $('#deviation3').val(data.deviation3);
+                    $('#deviation4').val(data.deviation4);
+                    $('#deviation5').val(data.deviation5);
+                    $('#deviation6').val(data.deviation6);
+                    $('#deviation7').val(data.deviation7);
+                    $('#deviation8').val(data.deviation8);
+                    $('#deviation9').val(data.deviation9);
+                    $('#deviation10').val(data.deviation10);
+                    $('#deviation11').val(data.deviation11);
+                    
                 },
                 error : function() {
                     alert("Nothing Data");
@@ -142,7 +141,7 @@
                 confirmButtonText: 'Yes, delete it!'
             }).then(function () {
                 $.ajax({
-                    url : "{{ url('digitalcaliper') }}" + '/' + id,
+                    url : "{{ url('outsidedial') }}" + '/' + id,
                     type : "POST",
                     data : {'_method' : 'DELETE', '_token' : csrf_token},
                     success : function(data) {
@@ -170,8 +169,8 @@
             $('#modal-form form').validator().on('submit', function (e) {
                 if (!e.isDefaultPrevented()){
                     var id = $('#id').val();
-                    if (save_method == 'add') url = "{{ url('digitalcaliper') }}";
-                    else url = "{{ url('digitalcaliper') . '/' }}" + id;
+                    if (save_method == 'add') url = "{{ url('outsidedial') }}";
+                    else url = "{{ url('outsidedial') . '/' }}" + id;
                     $.ajaxSetup({
                                     headers: {
                                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

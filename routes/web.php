@@ -39,16 +39,16 @@ Route::get('/exportUsers','UserController@exportUsersAll')->name('exportPDF.user
 Route::resource('digitalcaliper','DigitalCaliperController');
 Route::get('/apiDigitalCaliper','DigitalCaliperController@apiDigitalCalipers')->name('api.digitalcaliper');
 //---------------------------------------------------------------------------------------------------------------
+Route::resource('threadgauge','ThreadGaugeController');
+Route::get('/apiThreadGauge','ThreadGaugeController@apiThreadGauges')->name('api.threadgauge');
+//---------------------------------------------------------------------------------------------------------------
+
+Route::resource('outsidedial','OutsideDialController');
+Route::get('/apiOutsideDial','OutsideDialController@apiOutsideDials')->name('api.outsidedial');
+//---------------------------------------------------------------------------------------------------------------
 
 
 
-
-    
-    // Route::resource('productsOut','ProductKeluarController');
-    // Route::get('/apiProductsOut','ProductKeluarController@apiProductsOut')->name('api.productsOut');
-    // Route::get('/exportProductKeluarAll','ProductKeluarController@exportProductKeluarAll')->name('exportPDF.productKeluarAll');
-    // Route::get('/exportProductKeluarAllExcel','ProductKeluarController@exportExcel')->name('exportExcel.productKeluarAll');
-    // Route::get('/exportProductKeluar/{id}','ProductKeluarController@exportProductKeluar')->name('exportPDF.productKeluar');
 
     // Route::resource('productsIn','ProductMasukController');
     // Route::get('/apiProductsIn','ProductMasukController@apiProductsIn')->name('api.productsIn');

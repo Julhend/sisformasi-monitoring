@@ -15,17 +15,6 @@
             </div>
         </div>
 
-        <!-- search form (Optional) -->
-        {{-- <form action="#" method="get" class="sidebar-form">
-            <div class="input-group">
-                <input type="text" name="q" class="form-control" placeholder="Search...">
-                <span class="input-group-btn">
-              <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
-              </button>
-            </span>
-            </div>
-        </form> --}}
-        <!-- /.search form -->
 
         <!-- Sidebar Menu -->
         <ul class="sidebar-menu" data-widget="tree">
@@ -33,18 +22,10 @@
             <!-- Optionally, you can add icons to the links -->
             <li class="active"><a href="{{ url('/home') }}"><i class="fa fa-link"></i> <span>Dashboard</span></a></li>
             <li class="active"><a href="{{ route('users.index') }}"><i class="fa fa-link"></i> <span>Data Karyawan</span></a></li>
-            {{-- <li class="active"><a href="{{ route('masterlist.index') }}"><i class="fa fa-link"></i> <span>Masterlist</span></a></li> --}}
-            <li class="active"><a href="{{ route('digitalcaliper.index') }}"><i class="fa fa-link"></i> <span>Alat Ukur - Digital Caliper</span></a></li>
-            {{-- <li class="active"><a href="{{ route('masterlist.index') }}"><i class="fa fa-link"></i> <span>Calibrasi</span></a></li> --}}
-           
-            {{-- <li class="active"><a href="{{ route('productsIn.index') }}"><i class="fa fa-link"></i> <span>QC Verifikasi</span></a></li> --}}
-
-
-
-
-
-
-
+            <li class="active"><a href="{{ route('digitalcaliper.index') }}"><i class="fa fa-link"></i> <span>Digital Calipers</span></a></li>
+            <li class="active"><a href="{{ route('threadgauge.index') }}"><i class="fa fa-link"></i> <span>Thread Gauge</span></a></li>
+            <li class="active"><a href="{{ route('outsidedial.index') }}"><i class="fa fa-link"></i> <span>Outside Dial Micrometer</span></a></li>
+        
         </ul>
         <!-- /.sidebar-menu -->
     </section>
