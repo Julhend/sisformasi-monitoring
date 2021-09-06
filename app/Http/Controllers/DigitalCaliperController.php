@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 use App\DigitalCaliper;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
+use Illuminate\Support\Facades\Auth;
 
 class DigitalCaliperController extends Controller
 {
@@ -13,11 +14,7 @@ class DigitalCaliperController extends Controller
     {
         $this->middleware('role:admin,staff');
     }
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
         // $category = Category::orderBy('name','ASC')
@@ -28,162 +25,159 @@ class DigitalCaliperController extends Controller
         return view('digitalcaliper.index', compact('data'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function store(Request $request)
     {
-        //
+
+        $this->validate($request , [
+            'tool_name'          => 'required',
+            'serial_number'         => 'required',
+            'measuring_range'           => 'required',
+            'report_no'         => 'required',
+            'date_cal'   => 'required',
+            'next_cal'   => 'required',
+            'measured_value1'   => 'required',
+            'measured_value2'   => 'required',
+            'measured_value3'   => 'required',
+            'measured_value4'   => 'required',
+            'measured_value5'   => 'required',
+            'measured_value6'   => 'required',
+            'measured_value7'   => 'required',
+            'measured_value8'   => 'required',
+            'measured_value9'   => 'required',
+            'measured_value10'   => 'required',
+            'measured_value11'   => 'required',
+            'measured_value12'   => 'required',
+            'error1'   => 'required',
+            'error2'   => 'required',
+            'error3'   => 'required',
+            'error4'   => 'required',
+            'error5'   => 'required',
+            'error6'   => 'required',
+            'error7'   => 'required',
+            'error8'   => 'required',
+            'error9'   => 'required',
+            'error10'   => 'required',
+            'error11'   => 'required',
+            'error12'   => 'required',
+        ]);
+  
+              $data = new DigitalCaliper();
+              $data-> tool_name  = $request->input('tool_name');
+              $data-> serial_number  = $request->input('serial_number');
+              $data-> measuring_range  = $request->input('measuring_range');
+              $data-> report_no  = $request->input('report_no');
+              $data-> date_cal  = $request->input('date_cal');
+              $data-> next_cal  = $request->input('next_cal');
+              $data-> measured_value1  = $request->input('measured_value1');
+              $data-> measured_value2  = $request->input('measured_value2');
+              $data-> measured_value3  = $request->input('measured_value3');
+              $data-> measured_value4  = $request->input('measured_value4');
+              $data-> measured_value5  = $request->input('measured_value5');
+              $data-> measured_value6  = $request->input('measured_value6');
+              $data-> measured_value7  = $request->input('measured_value7');
+              $data-> measured_value8  = $request->input('measured_value8');
+              $data-> measured_value9  = $request->input('measured_value9');
+              $data-> measured_value10  = $request->input('measured_value10');
+              $data-> measured_value11  = $request->input('measured_value11');
+              $data-> measured_value12  = $request->input('measured_value12');
+              $data-> error1  = $request->input('error1');
+              $data-> error2  = $request->input('error2');
+              $data-> error3  = $request->input('error3');
+              $data-> error4  = $request->input('error4');
+              $data-> error5  = $request->input('error5');
+              $data-> error6  = $request->input('error6');
+              $data-> error7  = $request->input('error7');
+              $data-> error8  = $request->input('error8');
+              $data-> error9  = $request->input('error9');
+              $data-> error10  = $request->input('error10');
+              $data-> error11  = $request->input('error11');
+              $data-> error12  = $request->input('error12');
+              $data->users_id = Auth::id();
+              $data->checked_by = auth()->user()->name;
+              $data->save();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Tools Created'
+        ]);
+
     }
 
-    // /**
-    //  * Store a newly created resource in storage.
-    //  *
-    //  * @param  \Illuminate\Http\Request  $request
-    //  * @return \Illuminate\Http\Response
-    //  */
-    // public function store(Request $request)
-    // {
-    //     $category = Category::orderBy('name','ASC')
-    //         ->get()
-    //         ->pluck('name','id');
+  
+    public function edit($id)
+    {
+    
+        $data = DigitalCaliper::find($id);
+        return $data;
+    }
 
-    //     $this->validate($request , [
-    //         'nama'          => 'required|string',
-    //         'harga'         => 'required',
-    //         'qty'           => 'required',
-    //         'image'         => 'required',
-    //         'category_id'   => 'required',
-    //     ]);
+    public function update(Request $request, $id)
+    {
+        $this->validate($request , [
+             'tool_name'          => 'required',
+            'serial_number'         => 'required',
+            'measuring_range'           => 'required',
+            'report_no'         => 'required',
+            'date_cal'   => 'required',
+            'next_cal'   => 'required',
+            'measured_value1'   => 'required',
+            'measured_value2'   => 'required',
+            'measured_value3'   => 'required',
+            'measured_value4'   => 'required',
+            'measured_value5'   => 'required',
+            'measured_value6'   => 'required',
+            'measured_value7'   => 'required',
+            'measured_value8'   => 'required',
+            'measured_value9'   => 'required',
+            'measured_value10'   => 'required',
+            'measured_value11'   => 'required',
+            'measured_value12'   => 'required',
+            'error1'   => 'required',
+            'error2'   => 'required',
+            'error3'   => 'required',
+            'error4'   => 'required',
+            'error5'   => 'required',
+            'error6'   => 'required',
+            'error7'   => 'required',
+            'error8'   => 'required',
+            'error9'   => 'required',
+            'error10'   => 'required',
+            'error11'   => 'required',
+            'error12'   => 'required',
+        ]);
 
-    //     $input = $request->all();
-    //     $input['image'] = null;
+        $input = $request->all();
+        $data = DigitalCaliper::findOrFail($id);
+        $data->update($input);
 
-    //     if ($request->hasFile('image')){
-    //         $input['image'] = '/upload/products/'.str_slug($input['nama'], '-').'.'.$request->image->getClientOriginalExtension();
-    //         $request->image->move(public_path('/upload/products/'), $input['image']);
-    //     }
+        return response()->json([
+            'success' => true,
+            'message' => 'Digital Caliper Update'
+        ]);
+    }
 
-    //     Product::create($input);
+ 
+    public function destroy($id)
+    {
+        $data = DigitalCaliper::findOrFail($id);
+        DigitalCaliper::destroy($id);
 
-    //     return response()->json([
-    //         'success' => true,
-    //         'message' => 'Products Created'
-    //     ]);
+        return response()->json([
+            'success' => true,
+            'message' => 'Products Deleted'
+        ]);
+    }
 
-    // }
+    public function apiDigitalCalipers(){
+        $data = DigitalCaliper::all();
 
-    // /**
-    //  * Display the specified resource.
-    //  *
-    //  * @param  int  $id
-    //  * @return \Illuminate\Http\Response
-    //  */
-    // public function show($id)
-    // {
-    //     //
-    // }
+        return Datatables::of($data)
+            ->addColumn('action', function($data){
+                return '<a href="#" class="btn btn-info btn-xs"><i class="glyphicon glyphicon-eye-open"></i> Show</a> ' .
+                    '<a onclick="editForm('. $data->id .')" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i> Edit</a> ' .
+                    '<a onclick="deleteData('. $data->id .')" class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-trash"></i> Delete</a>';
+            })
+            ->rawColumns(['action'])->make(true);
 
-    // /**
-    //  * Show the form for editing the specified resource.
-    //  *
-    //  * @param  int  $id
-    //  * @return \Illuminate\Http\Response
-    //  */
-    // public function edit($id)
-    // {
-    //     $category = Category::orderBy('name','ASC')
-    //         ->get()
-    //         ->pluck('name','id');
-    //     $product = Product::find($id);
-    //     return $product;
-    // }
-
-//     /**
-//      * Update the specified resource in storage.
-//      *
-//      * @param  \Illuminate\Http\Request  $request
-//      * @param  int  $id
-//      * @return \Illuminate\Http\Response
-//      */
-//     public function update(Request $request, $id)
-//     {
-//         $category = Category::orderBy('name','ASC')
-//             ->get()
-//             ->pluck('name','id');
-
-//         $this->validate($request , [
-//             'nama'          => 'required|string',
-//             'harga'         => 'required',
-//             'qty'           => 'required',
-// //            'image'         => 'required',
-//             'category_id'   => 'required',
-//         ]);
-
-//         $input = $request->all();
-//         $produk = Product::findOrFail($id);
-
-//         $input['image'] = $produk->image;
-
-//         if ($request->hasFile('image')){
-//             if (!$produk->image == NULL){
-//                 unlink(public_path($produk->image));
-//             }
-//             $input['image'] = '/upload/products/'.str_slug($input['nama'], '-').'.'.$request->image->getClientOriginalExtension();
-//             $request->image->move(public_path('/upload/products/'), $input['image']);
-//         }
-
-//         $produk->update($input);
-
-//         return response()->json([
-//             'success' => true,
-//             'message' => 'Products Update'
-//         ]);
-//     }
-
-    // /**
-    //  * Remove the specified resource from storage.
-    //  *
-    //  * @param  int  $id
-    //  * @return \Illuminate\Http\Response
-    //  */
-    // public function destroy($id)
-    // {
-    //     $product = Product::findOrFail($id);
-
-    //     if (!$product->image == NULL){
-    //         unlink(public_path($product->image));
-    //     }
-
-    //     Product::destroy($id);
-
-    //     return response()->json([
-    //         'success' => true,
-    //         'message' => 'Products Deleted'
-    //     ]);
-    // }
-
-    // public function apiMasterlists(){
-    //     $product = Product::all();
-
-    //     return Datatables::of($product)
-    //         ->addColumn('category_name', function ($product){
-    //             return $product->category->name;
-    //         })
-    //         ->addColumn('show_photo', function($product){
-    //             if ($product->image == NULL){
-    //                 return 'No Image';
-    //             }
-    //             return '<img class="rounded-square" width="50" height="50" src="'. url($product->image) .'" alt="">';
-    //         })
-    //         ->addColumn('action', function($product){
-    //             return '<a href="#" class="btn btn-info btn-xs"><i class="glyphicon glyphicon-eye-open"></i> Show</a> ' .
-    //                 '<a onclick="editForm('. $product->id .')" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i> Edit</a> ' .
-    //                 '<a onclick="deleteData('. $product->id .')" class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-trash"></i> Delete</a>';
-    //         })
-    //         ->rawColumns(['category_name','show_photo','action'])->make(true);
-
-    // }
+    }
 }

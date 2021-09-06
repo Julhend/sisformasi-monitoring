@@ -48,9 +48,9 @@ class CreateCalibrasiDigitalCaliperTable extends Migration
             $table->string('error10');
             $table->string('error11');
             $table->string('error12');
-            $table->string('checked_by');
-            $table->string('approved_by');
-            $table->string('disposition');
+            $table->string('checked_by')->nullable();
+            $table->string('approved_by')->default("not yet approved");
+            $table->string('disposition')->default('pending');
             $table->timestamps();
             $table->foreign('users_id')->references('id')->on('users')->onDelete('cascade');
         });

@@ -25,14 +25,14 @@
         <!-- small box -->
         <div class="small-box bg-green">
             <div class="inner">
-                <h3>{{ \App\Category::count() }}<sup style="font-size: 20px"></sup></h3>
+                {{-- <h3>{{ \App\Category::count() }}<sup style="font-size: 20px"></sup></h3> --}}
 
                 <p>JUMLAH USER</p>
             </div>
             <div class="icon">
                 <i class="ion ion-stats-bars"></i>
             </div>
-            <a href="{{ route('categories.index') }}" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            {{-- <a href="{{ route('categories.index') }}" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a> --}}
         </div>
     </div>
     <!-- ./col -->
@@ -54,14 +54,14 @@
         <!-- small box -->
         <div class="small-box bg-red">
             <div class="inner">
-                <h3>{{ \App\Customer::count() }}</h3>
+                {{-- <h3>{{ \App\Customer::count() }}</h3> --}}
 
                 <p>TOTAL ALAT UKUR BELUM DIKALIBRASI</p>
             </div>
             <div class="icon">
                 <i class="ion ion-pie-graph"></i>
             </div>
-            <a href="{{ route('customers.index') }}" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            {{-- <a href="{{ route('customers.index') }}" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a> --}}
         </div>
     </div>
     <!-- ./col -->

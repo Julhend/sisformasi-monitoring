@@ -22,11 +22,15 @@
                 <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Nama</th>
-                    <th>Harga</th>
-                    <th>QTY</th>
-                    <th>Image</th>
-                    {{-- <th>Category</th> --}}
+                    <th>Tool Name</th>
+                    <th>Serial No</th>
+                    <th>Measuring Range</th>
+                    <th>Report No</th>
+                    <th>Date Cal</th>
+                    <th>Next Cal</th>
+                    <th>Disposition</th>
+                    <th>Approved By</th>
+                    <th>Checked By</th>
                     <th></th>
                 </tr>
                 </thead>
@@ -48,21 +52,6 @@
 
     {{-- Validator --}}
     <script src="{{ asset('assets/validator/validator.min.js') }}"></script>
-
-    {{--<script>--}}
-    {{--$(function () {--}}
-    {{--$('#items-table').DataTable()--}}
-    {{--$('#example2').DataTable({--}}
-    {{--'paging'      : true,--}}
-    {{--'lengthChange': false,--}}
-    {{--'searching'   : false,--}}
-    {{--'ordering'    : true,--}}
-    {{--'info'        : true,--}}
-    {{--'autoWidth'   : false--}}
-    {{--})--}}
-    {{--})--}}
-    {{--</script>--}}
-
     <script type="text/javascript">
         var table = $('#products-table').DataTable({
             processing: true,
@@ -70,11 +59,15 @@
             ajax: "{{ route('api.digitalcaliper') }}",
             columns: [
                 {data: 'id', name: 'id'},
-                {data: 'nama', name: 'nama'},
-                {data: 'harga', name: 'harga'},
-                {data: 'qty', name: 'qty'},
-                {data: 'show_photo', name: 'show_photo'},
-                // {data: 'category_name', name: 'category_name'},
+                {data: 'tool_name', name: 'tool_name'},
+                {data: 'serial_number', name: 'serial_number'},
+                {data: 'measuring_range', name: 'measuring_range'},
+                {data: 'report_no', name: 'report_no'},
+                {data: 'date_cal', name: 'date_cal'},
+                {data: 'next_cal', name: 'next_cal'},
+                {data: 'disposition', name: 'disposition'},
+                {data: 'approved_by', name: 'approved_by'},
+                {data: 'checked_by', name: 'checked_by'},
                 {data: 'action', name: 'action', orderable: false, searchable: false}
             ]
         });
@@ -97,13 +90,39 @@
                 dataType: "JSON",
                 success: function(data) {
                     $('#modal-form').modal('show');
-                    $('.modal-title').text('Edit Products');
-
+                    $('.modal-title').text('Edit Digital Calipers');
                     $('#id').val(data.id);
-                    $('#nama').val(data.nama);
-                    $('#harga').val(data.harga);
-                    $('#qty').val(data.qty);
-                    // $('#category_id').val(data.category_id);
+                    $('#tool_name').val(data.tool_name);
+                    $('#serial_number').val(data.serial_number);
+                    $('#measuring_range').val(data.measuring_range);
+                    $('#report_no').val(data.report_no);
+                    $('#tool_name').val(data.tool_name);
+                    $('#date_cal').val(data.date_cal);
+                    $('#next_cal').val(data.next_cal);
+                    $('#measured_value1').val(data.measured_value1);
+                    $('#measured_value2').val(data.measured_value2);
+                    $('#measured_value3').val(data.measured_value3);
+                    $('#measured_value4').val(data.measured_value4);
+                    $('#measured_value5').val(data.measured_value5);
+                    $('#measured_value6').val(data.measured_value6);
+                    $('#measured_value7').val(data.measured_value7);
+                    $('#measured_value8').val(data.measured_value8);
+                    $('#measured_value9').val(data.measured_value9);
+                    $('#measured_value10').val(data.measured_value10);
+                    $('#measured_value11').val(data.measured_value11);
+                    $('#measured_value12').val(data.measured_value12);
+                    $('#error1').val(data.error1);
+                    $('#error2').val(data.error2);
+                    $('#error3').val(data.error3);
+                    $('#error4').val(data.error4);
+                    $('#error5').val(data.error5);
+                    $('#error6').val(data.error6);
+                    $('#error7').val(data.error7);
+                    $('#error8').val(data.error8);
+                    $('#error9').val(data.error9);
+                    $('#error10').val(data.error10);
+                    $('#error11').val(data.error12);
+                    $('#error12').val(data.error12);
                 },
                 error : function() {
                     alert("Nothing Data");
@@ -153,12 +172,15 @@
                     var id = $('#id').val();
                     if (save_method == 'add') url = "{{ url('digitalcaliper') }}";
                     else url = "{{ url('digitalcaliper') . '/' }}" + id;
-
+                    $.ajaxSetup({
+                                    headers: {
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                }
+                            });
+   
                     $.ajax({
                         url : url,
                         type : "POST",
-                        //hanya untuk input data tanpa dokumen
-//                      data : $('#modal-form form').serialize(),
                         data: new FormData($("#modal-form form")[0]),
                         contentType: false,
                         processData: false,
@@ -169,7 +191,7 @@
                                 title: 'Success!',
                                 text: data.message,
                                 type: 'success',
-                                timer: '1500'
+                                timer: '2000'
                             })
                         },
                         error : function(data){
@@ -177,7 +199,7 @@
                                 title: 'Oops...',
                                 text: data.message,
                                 type: 'error',
-                                timer: '1500'
+                                timer: '2000'
                             })
                         }
                     });
