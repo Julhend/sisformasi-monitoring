@@ -171,13 +171,20 @@ class DigitalCaliperController extends Controller
     public function apiDigitalCalipers(){
         $data = DigitalCaliper::all();
 
-        return Datatables::of($data)
+         return Datatables::of($data)
             ->addColumn('action', function($data){
-                return '<a href="#" class="btn btn-info btn-xs"><i class="glyphicon glyphicon-eye-open"></i> Show</a> ' .
+            if(auth()->user()->role=="admin"){
+                    return 
+                    '<a href="#" class="btn btn-info btn-xs"><i class="glyphicon glyphicon-ok"></i> Approved</a> ' .         
                     '<a onclick="editForm('. $data->id .')" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i> Edit</a> ' .
                     '<a onclick="deleteData('. $data->id .')" class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-trash"></i> Delete</a>';
+                } else{
+
+                    return 
+                        '<a onclick="editForm('. $data->id .')" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i> Edit</a> ' .
+                        '<a onclick="deleteData('. $data->id .')" class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-trash"></i> Delete</a>';
+                }
             })
             ->rawColumns(['action'])->make(true);
-
     }
 }
