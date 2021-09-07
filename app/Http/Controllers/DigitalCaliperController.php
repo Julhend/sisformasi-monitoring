@@ -167,6 +167,21 @@ class DigitalCaliperController extends Controller
             'message' => 'Products Deleted'
         ]);
     }
+ public function approved($id)
+    {
+        $data=DigitalCaliper::find($id);
+        $data->disposition = 'approved';
+        $data->approved_by = auth()->user()->name;
+        $data->save();
+        return redirect('/digitalcaliper')->with('sukses','Berhasil Approved!');
+    }
+ public function reject($id)
+    {
+        $data=DigitalCaliper::find($id);
+        $data->disposition = 'reject';
+        $data->save();
+        return redirect('/digitalcaliper')->with('sukses','Berhasil Approved!');
+    }
 
     public function apiDigitalCalipers(){
         $data = DigitalCaliper::all();
@@ -175,7 +190,8 @@ class DigitalCaliperController extends Controller
             ->addColumn('action', function($data){
             if(auth()->user()->role=="admin"){
                     return 
-                    '<a href="#" class="btn btn-info btn-xs"><i class="glyphicon glyphicon-ok"></i> Approved</a> ' .         
+                    '<a href="/digitalcaliper/'.$data->id.'/approved" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-ok"></i> Approved</a> ' .
+                   '<a href="/digitalcaliper/'.$data->id.'/reject" class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-remove"></i> Reject</a> ' .
                     '<a onclick="editForm('. $data->id .')" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i> Edit</a> ' .
                     '<a onclick="deleteData('. $data->id .')" class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-trash"></i> Delete</a>';
                 } else{

@@ -164,6 +164,42 @@
                 });
             });
         }
+        function approvedData(id){
+            var csrf_token = $('meta[name="csrf-token"]').attr('content');
+            swal({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                type: 'warning',
+                showCancelButton: true,
+                cancelButtonColor: '#d33',
+                confirmButtonColor: '#3085d6',
+                confirmButtonText: 'Yes!'
+            }).then(function () {
+                $.ajax({
+                    // ajax: "{{ route('api.outsidedial') }}",
+                    url : "{{ url('outsidedial') }}" + '/' + id,
+                    type : "POST",
+                    data : {'_method' : 'POST', '_token' : csrf_token},
+                    success : function(data) {
+                        table.ajax.reload();
+                        swal({
+                            title: 'Success!',
+                            text: data.message,
+                            type: 'success',
+                            timer: '1500'
+                        })
+                    },
+                    error : function () {
+                        swal({
+                            title: 'Oops...',
+                            text: data.message,
+                            type: 'error',
+                            timer: '1500'
+                        })
+                    }
+                });
+            });
+        }
 
         $(function(){
             $('#modal-form form').validator().on('submit', function (e) {

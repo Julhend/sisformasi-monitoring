@@ -25,6 +25,7 @@
             <li class="active"><a href="{{ route('digitalcaliper.index') }}"><i class="fa fa-link"></i> <span>Digital Calipers</span></a></li>
             <li class="active"><a href="{{ route('threadgauge.index') }}"><i class="fa fa-link"></i> <span>Thread Gauge</span></a></li>
             <li class="active"><a href="{{ route('outsidedial.index') }}"><i class="fa fa-link"></i> <span>Outside Dial Micrometer</span></a></li>
+            <li class="active"><a href="{{ route('outsidedial.index') }}"><i class="fa fa-link"></i> <span>Masterlist</span></a></li>
         
         </ul>
         <!-- /.sidebar-menu -->
