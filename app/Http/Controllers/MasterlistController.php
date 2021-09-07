@@ -2,162 +2,66 @@
 
 namespace App\Http\Controllers;
 
-use App\Category;
-use App\Product;
+
+use App\OutsideDial;
+use App\DigitalCaliper;
+use App\ThreadGauge;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
+use Illuminate\Support\Facades\Auth;
 
-class MasterlistController extends Controller
+class OutsideDialController extends Controller
 {
     public function __construct()
     {
         $this->middleware('role:admin,staff');
     }
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
-        $category = Category::orderBy('name','ASC')
-            ->get()
-            ->pluck('name','id');
-
-        $producs = Product::all();
-        return view('masterlist.index', compact('category'));
+        $outsidedial = OutsideDial::all();
+        $digitalcaliper = DigitalCaliper::all();
+        $threadgauge = ThreadGauge::all();
+        return view('outsidedial.index', compact('data','threadgauge','digitalcaliper'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        $category = Category::orderBy('name','ASC')
-            ->get()
-            ->pluck('name','id');
-
-        $this->validate($request , [
-            'nama'          => 'required|string',
-            'harga'         => 'required',
-            'qty'           => 'required',
-            'image'         => 'required',
-            'category_id'   => 'required',
-        ]);
-
-        $input = $request->all();
-        $input['image'] = null;
-
-        if ($request->hasFile('image')){
-            $input['image'] = '/upload/products/'.str_slug($input['nama'], '-').'.'.$request->image->getClientOriginalExtension();
-            $request->image->move(public_path('/upload/products/'), $input['image']);
-        }
-
-        Product::create($input);
+         OutsideDial::create($request->all());
 
         return response()->json([
             'success' => true,
-            'message' => 'Products Created'
+            'message' => 'Tools Created'
         ]);
 
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+  
     public function edit($id)
     {
-        $category = Category::orderBy('name','ASC')
-            ->get()
-            ->pluck('name','id');
-        $product = Product::find($id);
-        return $product;
+    
+        $data = OutsideDial::find($id);
+        return $data;
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
-        $category = Category::orderBy('name','ASC')
-            ->get()
-            ->pluck('name','id');
-
-        $this->validate($request , [
-            'nama'          => 'required|string',
-            'harga'         => 'required',
-            'qty'           => 'required',
-//            'image'         => 'required',
-            'category_id'   => 'required',
-        ]);
-
+        
         $input = $request->all();
-        $produk = Product::findOrFail($id);
-
-        $input['image'] = $produk->image;
-
-        if ($request->hasFile('image')){
-            if (!$produk->image == NULL){
-                unlink(public_path($produk->image));
-            }
-            $input['image'] = '/upload/products/'.str_slug($input['nama'], '-').'.'.$request->image->getClientOriginalExtension();
-            $request->image->move(public_path('/upload/products/'), $input['image']);
-        }
-
-        $produk->update($input);
+        $data = OutsideDial::findOrFail($id);
+        $data->update($input);
 
         return response()->json([
             'success' => true,
-            'message' => 'Products Update'
+            'message' => 'Thread Gauge Update'
         ]);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+ 
     public function destroy($id)
     {
-        $product = Product::findOrFail($id);
-
-        if (!$product->image == NULL){
-            unlink(public_path($product->image));
-        }
-
-        Product::destroy($id);
+        $data = OutsideDial::findOrFail($id);
+        OutsideDial::destroy($id);
 
         return response()->json([
             'success' => true,
@@ -165,25 +69,41 @@ class MasterlistController extends Controller
         ]);
     }
 
-    public function apiMasterlists(){
-        $product = Product::all();
+    public function approved($id)
+    {
+        $data=OutsideDial::find($id);
+        $data->disposition = 'approved';
+        $data->approved_by = auth()->user()->name;
+        $data->save();
+        return redirect('/outsidedial')->with('sukses');
+    }
+ public function reject($id)
+    {
+        $data=OutsideDial::find($id);
+        $data->disposition = 'reject';
+        $data->save();
+        return redirect('/outsidedial')->with('sukses');
+    }
 
-        return Datatables::of($product)
-            ->addColumn('category_name', function ($product){
-                return $product->category->name;
-            })
-            ->addColumn('show_photo', function($product){
-                if ($product->image == NULL){
-                    return 'No Image';
+
+    public function apiOutsideDials(){
+        $data = OutsideDial::all();
+         return Datatables::of($data)
+            ->addColumn('action', function($data){
+            if(auth()->user()->role=="admin"){
+                    return         
+                   '<a href="/outsidedial/'.$data->id.'/approved" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-ok"></i> Approved</a> ' .
+                   '<a href="/outsidedial/'.$data->id.'/reject" class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-remove"></i> Reject</a> ' .
+                    '<a onclick="editForm('. $data->id .')" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i> Edit</a> ' .
+                    '<a onclick="deleteData('. $data->id .')" class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-trash"></i> Delete</a>';
+                } else{
+
+                    return 
+                        '<a onclick="editForm('. $data->id .')" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i> Edit</a> ' .
+                        '<a onclick="deleteData('. $data->id .')" class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-trash"></i> Delete</a>';
                 }
-                return '<img class="rounded-square" width="50" height="50" src="'. url($product->image) .'" alt="">';
             })
-            ->addColumn('action', function($product){
-                return '<a href="#" class="btn btn-info btn-xs"><i class="glyphicon glyphicon-eye-open"></i> Show</a> ' .
-                    '<a onclick="editForm('. $product->id .')" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i> Edit</a> ' .
-                    '<a onclick="deleteData('. $product->id .')" class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-trash"></i> Delete</a>';
-            })
-            ->rawColumns(['category_name','show_photo','action'])->make(true);
+            ->rawColumns(['action'])->make(true);
 
     }
 }

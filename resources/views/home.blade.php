@@ -10,14 +10,14 @@
         <!-- small box -->
         <div class="small-box bg-aqua">
             <div class="inner">
-                <h3>{{ \App\User::count() }}</h3>
+                <h3>{{ \App\DigitalCaliper::count() +  \App\ThreadGauge::count() +  \App\OutsideDial::count()}}</h3>
 
                 <p>TOTAL ALAT UKUR</p>
             </div>
             <div class="icon">
-                <i class="ion ion-bag"></i>
+                <i class="ion ion-ios-albums-outline"></i>
             </div>
-            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            {{-- <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a> --}}
         </div>
     </div>
     <!-- ./col -->
@@ -25,9 +25,9 @@
         <!-- small box -->
         <div class="small-box bg-green">
             <div class="inner">
-                {{-- <h3>{{ \App\Category::count() }}<sup style="font-size: 20px"></sup></h3> --}}
+                <h3>{{ \App\User::count() }}<sup style="font-size: 20px"></sup></h3>
 
-                <p>JUMLAH USER</p>
+                <p>TOTAL USER</p>
             </div>
             <div class="icon">
                 <i class="ion ion-stats-bars"></i>
@@ -40,13 +40,13 @@
         <!-- small box -->
         <div class="small-box bg-yellow">
             <div class="inner">
-                <h3>{{ \App\User::count() }}</h3>
-                <p>JUMLAH KARYAWAN</p>
+                <h3> {{DB::table('users')->where('role', 'staff')->count()}}</h3>
+                <p>TOTAL KARYAWAN</p>
             </div>
             <div class="icon">
                 <i class="ion ion-person-add"></i>
             </div>
-            <a href="{{ route('users.index') }}" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            {{-- <a href="{{ route('users.index') }}" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a> --}}
         </div>
     </div>
     <!-- ./col -->
@@ -54,8 +54,14 @@
         <!-- small box -->
         <div class="small-box bg-red">
             <div class="inner">
-                {{-- <h3>{{ \App\Customer::count() }}</h3> --}}
-
+                <h3>{{
+                DB::table('calibrasi_digital_caliper')->where('disposition', 'pending')->count() +
+                DB::table('calibrasi_outside_dial_micrometer')->where('disposition', 'pending')->count() +
+                DB::table('calibrasi_thread_gauge')->where('disposition', 'pending')->count()
+                
+                
+                
+                }}</h3>
                 <p>TOTAL ALAT UKUR BELUM DIKALIBRASI</p>
             </div>
             <div class="icon">

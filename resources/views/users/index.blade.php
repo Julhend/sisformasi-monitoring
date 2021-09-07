@@ -93,7 +93,7 @@
 
                     $('#id').val(data.id);
                     $('#nik').val(data.nik);
-                    $('#nama').val(data.nama);
+                    $('#name').val(data.name);
                     $('#email').val(data.email);
                     $('#password').val(data.password);
                     $('#no_hp').val(data.no_hp);
