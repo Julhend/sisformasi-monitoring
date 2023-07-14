@@ -40,6 +40,12 @@
                             <span class="help-block with-errors"></span>
                         </div>
 
+                        <div class="form-group">
+                            <label >Password</label>
+                            <input type="password" class="form-control" id="password" name="password"   required>
+                            <span class="help-block with-errors"></span>
+                        </div>
+
 
                     </div>
                     <!-- /.box-body -->

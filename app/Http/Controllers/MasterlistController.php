@@ -3,14 +3,13 @@
 namespace App\Http\Controllers;
 
 
-use App\OutsideDial;
-use App\DigitalCaliper;
-use App\ThreadGauge;
+
+use App\MasterList;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\Auth;
 
-class OutsideDialController extends Controller
+class MasterListController extends Controller
 {
     public function __construct()
     {
@@ -19,91 +18,16 @@ class OutsideDialController extends Controller
 
     public function index()
     {
-        $outsidedial = OutsideDial::all();
-        $digitalcaliper = DigitalCaliper::all();
-        $threadgauge = ThreadGauge::all();
-        return view('outsidedial.index', compact('data','threadgauge','digitalcaliper'));
+
+        $masterlist = MasterList::all();
+        return view('masterlist.index', compact('masterlist'));
     }
 
-    public function store(Request $request)
+    public function apiMasterLists()
     {
-         OutsideDial::create($request->all());
+        $data = MasterList::all();
 
-        return response()->json([
-            'success' => true,
-            'message' => 'Tools Created'
-        ]);
-
-    }
-
-  
-    public function edit($id)
-    {
-    
-        $data = OutsideDial::find($id);
-        return $data;
-    }
-
-    public function update(Request $request, $id)
-    {
-        
-        $input = $request->all();
-        $data = OutsideDial::findOrFail($id);
-        $data->update($input);
-
-        return response()->json([
-            'success' => true,
-            'message' => 'Thread Gauge Update'
-        ]);
-    }
-
- 
-    public function destroy($id)
-    {
-        $data = OutsideDial::findOrFail($id);
-        OutsideDial::destroy($id);
-
-        return response()->json([
-            'success' => true,
-            'message' => 'Products Deleted'
-        ]);
-    }
-
-    public function approved($id)
-    {
-        $data=OutsideDial::find($id);
-        $data->disposition = 'approved';
-        $data->approved_by = auth()->user()->name;
-        $data->save();
-        return redirect('/outsidedial')->with('sukses');
-    }
- public function reject($id)
-    {
-        $data=OutsideDial::find($id);
-        $data->disposition = 'reject';
-        $data->save();
-        return redirect('/outsidedial')->with('sukses');
-    }
-
-
-    public function apiOutsideDials(){
-        $data = OutsideDial::all();
-         return Datatables::of($data)
-            ->addColumn('action', function($data){
-            if(auth()->user()->role=="admin"){
-                    return         
-                   '<a href="/outsidedial/'.$data->id.'/approved" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-ok"></i> Approved</a> ' .
-                   '<a href="/outsidedial/'.$data->id.'/reject" class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-remove"></i> Reject</a> ' .
-                    '<a onclick="editForm('. $data->id .')" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i> Edit</a> ' .
-                    '<a onclick="deleteData('. $data->id .')" class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-trash"></i> Delete</a>';
-                } else{
-
-                    return 
-                        '<a onclick="editForm('. $data->id .')" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i> Edit</a> ' .
-                        '<a onclick="deleteData('. $data->id .')" class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-trash"></i> Delete</a>';
-                }
-            })
-            ->rawColumns(['action'])->make(true);
-
+        return Datatables::of($data)
+            ->make(true);
     }
 }

@@ -10,9 +10,9 @@
     <div class="box">
 
         <div class="box-header">
-            <h3 class="box-title">Data Alat Ukur Digital Caliper</h3>
+            <h3 class="box-title">Data Alat Ukur Dial Caliper</h3>
 
-            <a onclick="addForm()" class="btn btn-primary pull-right" style="margin-top: -8px;">Add Digital Caliper</a>
+            <a onclick="addForm()" class="btn btn-primary pull-right" style="margin-top: -8px;">Add Dial Caliper</a>
         </div>
 
 

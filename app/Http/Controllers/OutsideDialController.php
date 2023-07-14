@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 
 use App\OutsideDial;
+use App\MasterList;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\Auth;
@@ -24,7 +25,7 @@ class OutsideDialController extends Controller
     public function store(Request $request)
     {
          OutsideDial::create($request->all());
-
+        //  $outsideDial = OutsideDial::create($request->all());
         return response()->json([
             'success' => true,
             'message' => 'Tools Created'
@@ -42,11 +43,10 @@ class OutsideDialController extends Controller
 
     public function update(Request $request, $id)
     {
-        
-        $input = $request->all();
-        $data = OutsideDial::findOrFail($id);
-        $data->update($input);
-
+    
+        $data = $request->all();
+        OutsideDial::where('id', $id)->update($data);
+    
         return response()->json([
             'success' => true,
             'message' => 'Thread Gauge Update'
@@ -71,6 +71,31 @@ class OutsideDialController extends Controller
         $data->disposition = 'approved';
         $data->approved_by = auth()->user()->name;
         $data->save();
+
+        if ($data['disposition'] === 'approved') {
+            $outsideDial = OutsideDial::findOrFail($id);
+            $serialNumber = $outsideDial->serial_number;
+
+        // Check if the serial number already exists in the MasterList records
+        $existingRecord = MasterList::where('instrument_serial_number', $serialNumber)->exists();
+            if(!$existingRecord){
+                MasterList::create([
+                    'users_id' => auth()->user()->id,
+                    'equipment_description' => $outsideDial->tool_name,
+                    'range' => $outsideDial->measuring_range,
+                    'equip_control_no' => $outsideDial->report_no,
+                    'inspection_method' => "QAP-WI-06",
+                    'acceptance_kriteria' => "+/- 0.005",
+                    'frequency' => "3 Mths",
+                    'date_cal' => $outsideDial->date_cal,
+                    'next_cal' => $outsideDial->next_cal,
+                    'dept' => "QC",
+                    'instrument_serial_number' => $outsideDial->serial_number,
+                    'remark' => "Internal Calibration",
+                    'status' => "active"
+                ]);
+            }
+        }
         return redirect('/outsidedial')->with('sukses');
     }
  public function reject($id)

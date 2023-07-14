@@ -10,6 +10,7 @@ use Yajra\DataTables\DataTables;
 use Excel;
 use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -40,15 +41,22 @@ class UserController extends Controller
             'name'    => 'required',
             'email'     => 'required|unique:users',
             'no_hp'   => 'required',
+            'password' => 'nullable|min:4'
         ]);
 
-        User::create($request->all());
+
+        $data = $request->all();
+
+        if (!empty($data['password'])) {
+            $data['password'] = Hash::make($data['password']);
+        }
+
+        User::create($data);
 
         return response()->json([
             'success'    => true,
             'message'    => 'Karyawan Created'
         ]);
-
     }
 
     /**
@@ -77,11 +85,19 @@ class UserController extends Controller
             'nik'      => 'required|string|min:2',
             'email'     => 'required|string|email',
             'no_hp'   => 'required|string|min:2',
+            'password' => 'nullable|min:4'
         ]);
 
         $user = User::findOrFail($id);
 
-        $user->update($request->all());
+        $data = $request->all();
+        if (!empty($data['password'])) {
+            $data['password'] = Hash::make($data['password']);
+        } else {
+            unset($data['password']);
+        }
+
+        $user->update($data);
 
         return response()->json([
             'success'    => true,

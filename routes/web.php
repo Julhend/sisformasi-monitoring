@@ -52,6 +52,9 @@ Route::get('/apiOutsideDial','OutsideDialController@apiOutsideDials')->name('api
 Route::get('/outsidedial/{id}/approved','OutsideDialController@approved')->name('approved');
 Route::get('/outsidedial/{id}/reject','OutsideDialController@reject')->name('reject');
 //---------------------------------------------------------------------------------------------------------------
+Route::resource('masterlist','MasterListController');
+Route::get('/apiMasterList','MasterListController@apiMasterLists')->name('api.masterlist');
+//---------------------------------------------------------------------------------------------------------------
 
 });
 

@@ -57,7 +57,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <span class="sr-only">Toggle navigation</span>
             </a>
             <div class="navbar-brand">
-                  <p> PT A AND ONE PRECISION ENGINEERING </p>
+                  <p> PT A & ONE PRECISION ENGINEERING </p>
             </div>
             <!-- Navbar Right Menu -->
             <div class="navbar-custom-menu">

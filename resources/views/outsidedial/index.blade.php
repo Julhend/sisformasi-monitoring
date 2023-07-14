@@ -10,9 +10,9 @@
     <div class="box">
 
         <div class="box-header">
-            <h3 class="box-title">Data Alat Ukur Outside Dial Micrometer</h3>
+            <h3 class="box-title">Data Alat Ukur Outside Digital Micrometer</h3>
 
-            <a onclick="addForm()" class="btn btn-primary pull-right" style="margin-top: -8px;">Add Outside Dial Micrometer</a>
+            <a onclick="addForm()" class="btn btn-primary pull-right" style="margin-top: -8px;">Add Outside Digital Micrometer</a>
         </div>
 
 
@@ -77,7 +77,7 @@
             $('input[name=_method]').val('POST');
             $('#modal-form').modal('show');
             $('#modal-form form')[0].reset();
-            $('.modal-title').text('Add Outside Dial Micrometer');
+            $('.modal-title').text('Add Outside Digital Micrometer');
         }
 
         function editForm(id) {
@@ -90,7 +90,7 @@
                 dataType: "JSON",
                 success: function(data) {
                     $('#modal-form').modal('show');
-                    $('.modal-title').text('Edit Outside Dial Micrometer');
+                    $('.modal-title').text('Edit Outside Digital Micrometer');
                     $('#id').val(data.id);
                     $('#tool_name').val(data.tool_name);
                     $('#serial_number').val(data.serial_number);

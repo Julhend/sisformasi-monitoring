@@ -36,11 +36,12 @@
     <div class="login-logo">
         <h1><b>SISTEM INFORMASI</b></h1>
         <h2>PENGENDALIAN KALIBRASI ALAT UKUR</h2>
+        {{-- <h2>PT. A & ONE PRECISSION ENGINEERING INDONESIA</h2> --}}
     {{-- <h3> PT A AND ONE PRECISION ENGINEERING</h3> --}}
     </div>
     <!-- /.login-logo -->
     <div class="login-box-body">
-        <p class="login-box-msg">Sign in to start your session</p>
+        {{-- <p class="login-box-msg">Sign in to start your session</p> --}}
 
         <form method="POST" action="{{ route('login') }}">
             @csrf
@@ -79,23 +80,23 @@
             <div class="row">
                 <div class="col-xs-12">
                     <div class="checkbox icheck">
-                        <label>
+                        {{-- <label>
                             <input type="checkbox" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}> &nbsp; Remember Me
-                        </label>
+                        </label> --}}
                     </div>
                 </div>
             </div>
         </form>
         <!-- /.social-auth-links -->
         <div class="social-auth-links text-center">
-            <p>- OR -</p>
+            {{-- <p>- OR -</p> --}}
             {{-- @if (Route::has('password.request'))
                 <a href="{{ route('password.request') }}" class="btn btn-block btn-social btn-facebook btn-flat"><i class="fa fa-fw fa-key"></i> Forgot Password ?</a>
             @endif --}}
 
-            @if (Route::has('register'))
+            {{-- @if (Route::has('register'))
                 <a href="{{ route('register') }}" class="btn btn-block btn-social btn-facebook btn-flat"><i class="fa fa-fw fa-user-plus"></i> Sign Up</a>
-            @endif
+            @endif --}}
         </div>
 
     </div>

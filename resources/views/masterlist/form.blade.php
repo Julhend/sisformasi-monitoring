@@ -39,7 +39,7 @@
                         <div class="colum"> 
                         <div class="form-group">
                             <label >Tool Name</label>
-                            <input type="text" class="form-control" id="tool_name" name="tool_name" value="Outside Dial Micrometer" autofocus required>
+                            <input type="text" class="form-control" id="tool_name" name="tool_name" value="Outside Digital Micrometer" autofocus required>
                             <span class="help-block with-errors"></span>
                         </div>
                         <div class="form-group">

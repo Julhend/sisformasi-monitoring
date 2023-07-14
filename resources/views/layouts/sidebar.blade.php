@@ -20,12 +20,16 @@
         <ul class="sidebar-menu" data-widget="tree">
             <li class="header">MENU</li>
             <!-- Optionally, you can add icons to the links -->
+            {{-- @if (auth()->user()->role == 'staff' || auth()->user()->role == 'admin') --}}
+            
             <li class="active"><a href="{{ url('/home') }}"><i class="fa fa-link"></i> <span>Dashboard</span></a></li>
+            @if (auth()->user()->role == 'admin')
             <li class="active"><a href="{{ route('users.index') }}"><i class="fa fa-link"></i> <span>Data Karyawan</span></a></li>
-            <li class="active"><a href="{{ route('digitalcaliper.index') }}"><i class="fa fa-link"></i> <span>Digital Calipers</span></a></li>
+            @endif
+            <li class="active"><a href="{{ route('digitalcaliper.index') }}"><i class="fa fa-link"></i> <span>Dial Calipers</span></a></li>
             <li class="active"><a href="{{ route('threadgauge.index') }}"><i class="fa fa-link"></i> <span>Thread Gauge</span></a></li>
-            <li class="active"><a href="{{ route('outsidedial.index') }}"><i class="fa fa-link"></i> <span>Outside Dial Micrometer</span></a></li>
-            <li class="active"><a href="{{ route('outsidedial.index') }}"><i class="fa fa-link"></i> <span>Masterlist</span></a></li>
+            <li class="active"><a href="{{ route('outsidedial.index') }}"><i class="fa fa-link"></i> <span>Outside Digital Micrometer</span></a></li>
+            <li class="active"><a href="{{ route('masterlist.index') }}"><i class="fa fa-link"></i> <span>Masterlist</span></a></li>
         
         </ul>
         <!-- /.sidebar-menu -->
