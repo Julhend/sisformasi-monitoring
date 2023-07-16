@@ -16,7 +16,7 @@
 
         <div class="box-header">
             @if (auth()->user()->role == 'admin')
-            <a onclick="addForm()" class="btn btn-primary" >Tambah Karyawan</a>
+                <a onclick="addForm()" class="btn btn-primary">Tambah Karyawan</a>
             @endif
             <a href="{{ route('exportPDF.usersAll') }}" class="btn btn-danger">Export PDF</a>
         </div>
@@ -26,15 +26,15 @@
         <div class="box-body">
             <table id="customer-table" class="table table-striped">
                 <thead>
-                <tr>
-                    <th>Id</th>
-                    <th>NIK</th>
-                    <th>Nama</th>
-                    <th>Email</th>
-                    <th>No Hp</th>
-                    <th>Jabatan</th>
-                    <th></th>
-                </tr>
+                    <tr>
+                        <th>Id</th>
+                        <th>NIK</th>
+                        <th>Nama</th>
+                        <th>Email</th>
+                        <th>No Hp</th>
+                        <th>Jabatan</th>
+                        <th></th>
+                    </tr>
                 </thead>
                 <tbody></tbody>
             </table>
@@ -44,11 +44,9 @@
 
 
     @include('users.form')
-
 @endsection
 
 @section('bot')
-
     <!-- DataTables -->
     <script src=" {{ asset('assets/bower_components/datatables.net/js/jquery.dataTables.min.js') }} "></script>
     <script src="{{ asset('assets/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js') }} "></script>
@@ -60,14 +58,36 @@
             processing: true,
             serverSide: true,
             ajax: "{{ route('api.users') }}",
-            columns: [
-                {data: 'id', name: 'id'},
-                {data: 'nik', name: 'nik'},
-                {data: 'name', name: 'name'},
-                {data: 'email', name: 'email'},
-                {data: 'no_hp', name: 'no_hp'},
-                {data: 'role', name: 'role'},
-                {data: 'action', name: 'action', orderable: false, searchable: false}
+            columns: [{
+                    data: 'id',
+                    name: 'id'
+                },
+                {
+                    data: 'nik',
+                    name: 'nik'
+                },
+                {
+                    data: 'name',
+                    name: 'name'
+                },
+                {
+                    data: 'email',
+                    name: 'email'
+                },
+                {
+                    data: 'no_hp',
+                    name: 'no_hp'
+                },
+                {
+                    data: 'role',
+                    name: 'role'
+                },
+                {
+                    data: 'action',
+                    name: 'action',
+                    orderable: false,
+                    searchable: false
+                }
             ]
         });
 
@@ -98,13 +118,13 @@
                     $('#password').val(data.password);
                     $('#no_hp').val(data.no_hp);
                 },
-                error : function() {
+                error: function() {
                     alert("Nothing Data");
                 }
             });
         }
 
-        function deleteData(id){
+        function deleteData(id) {
             var csrf_token = $('meta[name="csrf-token"]').attr('content');
             swal({
                 title: 'Are you sure?',
@@ -114,12 +134,15 @@
                 cancelButtonColor: '#d33',
                 confirmButtonColor: '#3085d6',
                 confirmButtonText: 'Yes, delete it!'
-            }).then(function () {
+            }).then(function() {
                 $.ajax({
-                    url : "{{ url('users') }}" + '/' + id,
-                    type : "POST",
-                    data : {'_method' : 'DELETE', '_token' : csrf_token},
-                    success : function(data) {
+                    url: "{{ url('users') }}" + '/' + id,
+                    type: "POST",
+                    data: {
+                        '_method': 'DELETE',
+                        '_token': csrf_token
+                    },
+                    success: function(data) {
                         table.ajax.reload();
                         swal({
                             title: 'Success!',
@@ -128,7 +151,7 @@
                             timer: '1500'
                         })
                     },
-                    error : function () {
+                    error: function() {
                         swal({
                             title: 'Oops...',
                             text: data.message,
@@ -140,22 +163,22 @@
             });
         }
 
-        $(function(){
-            $('#modal-form form').validator().on('submit', function (e) {
-                if (!e.isDefaultPrevented()){
+        $(function() {
+            $('#modal-form form').validator().on('submit', function(e) {
+                if (!e.isDefaultPrevented()) {
                     var id = $('#id').val();
                     if (save_method == 'add') url = "{{ url('users') }}";
                     else url = "{{ url('users') . '/' }}" + id;
 
                     $.ajax({
-                        url : url,
-                        type : "POST",
+                        url: url,
+                        type: "POST",
                         //hanya untuk input data tanpa dokumen
-//                      data : $('#modal-form form').serialize(),
+                        //                      data : $('#modal-form form').serialize(),
                         data: new FormData($("#modal-form form")[0]),
                         contentType: false,
                         processData: false,
-                        success : function(data) {
+                        success: function(data) {
                             $('#modal-form').modal('hide');
                             table.ajax.reload();
                             swal({
@@ -165,7 +188,7 @@
                                 timer: '1500'
                             })
                         },
-                        error : function(data){
+                        error: function(data) {
                             swal({
                                 title: 'Oops...',
                                 text: data.message,
@@ -179,5 +202,4 @@
             });
         });
     </script>
-
 @endsection

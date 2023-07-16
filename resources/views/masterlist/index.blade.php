@@ -12,9 +12,24 @@
         <div class="box-header">
             <h3 class="box-title">MASTERLIST</h3>
 
-            {{-- <a onclick="addForm()" class="btn btn-primary pull-right" style="margin-top: -8px;">Add Outside Dial Micrometer</a> --}}
+            {{-- <a onclick="addForm()" class="btn btn-primary pull-right" style="margin-top: -8px;">Cetak</a> --}}
+            {{-- <a href="{{ route('exportPDF.masterlistAll') }}" class="btn btn-danger pull-right"
+                style="margin-top: -8px;">Cetak</a> --}}
         </div>
 
+        <div class="box-body pull-right">
+            <div class="form-inline">
+                <div class="form-group">
+                    <label for="start_date">Start Date:</label>
+                    <input type="date" class="form-control" id="start_date" name="start_date" required>
+                </div>
+                <div class="form-group">
+                    <label for="end_date">End Date:</label>
+                    <input type="date" class="form-control" id="end_date" name="end_date" required>
+                </div>
+                <button id="printButton" class="btn btn-danger" style="margin-left: 10px;">Cetak</button>
+            </div>
+        </div>
 
         <!-- /.box-header -->
         <div class="box-body">
@@ -53,6 +68,21 @@
     {{-- Validator --}}
     <script src="{{ asset('assets/validator/validator.min.js') }}"></script>
     <script type="text/javascript">
+        // Function to construct the URL with start and end dates
+        function constructUrl(startDate, endDate) {
+            return "{{ route('exportPDF.masterlistPeriod') }}?startDate=" + startDate + "&endDate=" + endDate;
+        }
+
+        // Add click event listener to the "Cetak" button
+        $('#printButton').on('click', function() {
+            var startDate = $('#start_date').val();
+            var endDate = $('#end_date').val();
+            var url = constructUrl(startDate, endDate);
+
+            // Trigger the download by redirecting to the constructed URL
+            window.location.href = url;
+        });
+
         var table = $('#products-table').DataTable({
             processing: true,
             serverSide: true,
