@@ -80,7 +80,7 @@ class OutsideDialController extends Controller
         $existingRecord = MasterList::where('instrument_serial_number', $serialNumber)->exists();
             if(!$existingRecord){
                 MasterList::create([
-                    'users_id' => auth()->user()->id,
+                    'users_id' => $outsideDial->users_id,
                     'equipment_description' => $outsideDial->tool_name,
                     'range' => $outsideDial->measuring_range,
                     'equip_control_no' => $outsideDial->report_no,

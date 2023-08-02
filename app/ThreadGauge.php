@@ -8,6 +8,7 @@ class ThreadGauge extends Model
 {
      protected $table = 'calibrasi_thread_gauge';
       protected $guarded = ['id'];
+      protected $dates = ['next_cal'];
 
      public function users()
     {

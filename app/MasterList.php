@@ -8,6 +8,7 @@ class MasterList extends Model
 {
      protected $table = 'masterlist';
       protected $guarded = ['id'];
+      protected $dates = ['next_cal'];
 
      public function users()
     {
