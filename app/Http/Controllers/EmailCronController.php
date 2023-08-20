@@ -31,7 +31,7 @@ class EmailCronController extends Controller
         // $this->sendReminders($threadGauges);
         $this->sendReminders($masterLists);
     
-        return response()->json(['message' => 'Due date reminders sent successfully']);
+        return response()->json(['message' => 'Calibration reminder sent successfully']);
     }
     
   

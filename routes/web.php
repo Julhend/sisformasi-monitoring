@@ -56,7 +56,11 @@ Route::resource('masterlist','MasterListController');
 Route::get('/apiMasterList','MasterListController@apiMasterLists')->name('api.masterlist');
 Route::get('/cetakMasterlist','MasterListController@exportMasterlistAll')->name('exportPDF.masterlistAll');
 Route::get('/cetakMasterlistPeriod','MasterListController@exportMasterlistPeriod')->name('exportPDF.masterlistPeriod');
+Route::post('/send-notifications', 'EmailCronController@sendDueDateReminders');
+
 //---------------------------------------------------------------------------------------------------------------
+
+
 
 });
 

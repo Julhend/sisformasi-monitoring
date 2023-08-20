@@ -12,7 +12,11 @@
         <div class="box-header">
             <h3 class="box-title">MASTERLIST</h3>
 
-            {{-- <a onclick="addForm()" class="btn btn-primary pull-right" style="margin-top: -8px;">Cetak</a> --}}
+            @if (auth()->user()->role == 'admin')
+                <a id="sendNotificationButton" class="btn btn-primary pull-right" style="margin-top: -8px;">Kirim
+                    Notifikasi</a>
+            @endif
+
             {{-- <a href="{{ route('exportPDF.masterlistAll') }}" class="btn btn-danger pull-right"
                 style="margin-top: -8px;">Cetak</a> --}}
         </div>
@@ -146,6 +150,42 @@
                 // {data: 'action', name: 'action', orderable: false, searchable: false}
             ]
 
+        });
+    </script>
+
+    <script>
+        // Wait for the page to load
+        document.addEventListener('DOMContentLoaded', function() {
+            // Select the button by its ID
+            const sendButton = document.getElementById('sendNotificationButton');
+
+            // Add a click event listener
+            sendButton.addEventListener('click', function() {
+                // Disable the button or show a loading spinner (optional)
+                sendButton.disabled = true; // Disable the button
+
+                // Send an AJAX request to trigger the notification
+                fetch('/send-notifications', {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}', // Include the CSRF token if you're using it
+                            'Content-Type': 'application/json',
+                        },
+                    })
+                    .then((response) => response.json())
+                    .then((data) => {
+                        // Handle the response here, you can show a success message or perform any other action
+                        alert(data
+                            .message); // Show an alert with the response message (you can modify this)
+                    })
+                    .catch((error) => {
+                        console.error('Error:', error);
+                    })
+                    .finally(() => {
+                        // Re-enable the button after the request is complete (optional)
+                        sendButton.disabled = false; // Re-enable the button
+                    });
+            });
         });
     </script>
 @endsection
