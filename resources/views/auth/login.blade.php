@@ -37,8 +37,12 @@
 
     <div class="login-box">
         <div class="login-logo">
+            <img src="{{ asset('A_1-removebg-preview.png') }}" class="user-image" alt="User Image"
+                style="width: 100px; height: 100px;">
+
             <h1><b>SISTEM INFORMASI</b></h1>
             <h2>PENGENDALIAN KALIBRASI ALAT UKUR</h2>
+            <h4>Jl. Asoka Lot SD 62 & 63 BIE Lobam Bintan Kepualaun Riau 29154. </h4>
             {{-- <h2>PT. A & ONE PRECISSION ENGINEERING INDONESIA</h2> --}}
             {{-- <h3> PT A AND ONE PRECISION ENGINEERING</h3> --}}
         </div>
