@@ -42,7 +42,7 @@
 
             <h1><b>SISTEM INFORMASI</b></h1>
             <h2>PENGENDALIAN KALIBRASI ALAT UKUR</h2>
-            <h4>Jl. Asoka Lot SD 62 & 63 BIE Lobam Bintan Kepualaun Riau 29154. </h4>
+            <h4>Jl. Asoka Lot SD 62 & 63 BIE Lobam Bintan Kepualaun Riau 29154 | Telpon: 0770-696188 </h4>
             {{-- <h2>PT. A & ONE PRECISSION ENGINEERING INDONESIA</h2> --}}
             {{-- <h3> PT A AND ONE PRECISION ENGINEERING</h3> --}}
         </div>

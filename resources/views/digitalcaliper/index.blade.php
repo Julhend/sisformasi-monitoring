@@ -20,19 +20,20 @@
         <div class="box-body">
             <table id="products-table" class="table table-striped">
                 <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Tool Name</th>
-                    <th>Serial No</th>
-                    <th>Measuring Range</th>
-                    <th>Report No</th>
-                    <th>Date Cal</th>
-                    <th>Next Cal</th>
-                    <th>Disposition</th>
-                    <th>Approved By</th>
-                    <th>Checked By</th>
-                     <th>Action</th>
-                </tr>
+                    <tr>
+                        <th>ID</th>
+                        <th>Tool Name</th>
+                        <th>Serial No</th>
+                        <th>Measuring Range</th>
+                        <th>Report No</th>
+                        <th>Date Cal</th>
+                        <th>Next Cal</th>
+                        <th>Disposition</th>
+                        <th>Approved By</th>
+                        <th>Checked By</th>
+                        <th>Rejected Reason</th>
+                        <th>Action</th>
+                    </tr>
                 </thead>
                 <tbody></tbody>
             </table>
@@ -40,12 +41,33 @@
         <!-- /.box-body -->
     </div>
 
-    @include('digitalcaliper.form')
+    <!-- Modal for Rejection Reason -->
+    <div class="modal fade" id="modal-rejection-reason" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel">Rejection Reason</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="rejection-reason-form">
+                        <div class="form-group">
+                            <label for="rejected_reason">Reason:</label>
+                            <textarea class="form-control" name="rejected_reason" id="rejected_reason" rows="4" required></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-danger" id="submit-rejection-reason">Submit</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
+    @include('digitalcaliper.form')
 @endsection
 
 @section('bot')
-
     <!-- DataTables -->
     <script src=" {{ asset('assets/bower_components/datatables.net/js/jquery.dataTables.min.js') }} "></script>
     <script src="{{ asset('assets/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js') }} "></script>
@@ -57,18 +79,56 @@
             processing: true,
             serverSide: true,
             ajax: "{{ route('api.digitalcaliper') }}",
-            columns: [
-                {data: 'id', name: 'id'},
-                {data: 'tool_name', name: 'tool_name'},
-                {data: 'serial_number', name: 'serial_number'},
-                {data: 'measuring_range', name: 'measuring_range'},
-                {data: 'report_no', name: 'report_no'},
-                {data: 'date_cal', name: 'date_cal'},
-                {data: 'next_cal', name: 'next_cal'},
-                {data: 'disposition', name: 'disposition'},
-                {data: 'approved_by', name: 'approved_by'},
-                {data: 'checked_by', name: 'checked_by'},
-                {data: 'action', name: 'action', orderable: false, searchable: false}
+            columns: [{
+                    data: 'id',
+                    name: 'id'
+                },
+                {
+                    data: 'tool_name',
+                    name: 'tool_name'
+                },
+                {
+                    data: 'serial_number',
+                    name: 'serial_number'
+                },
+                {
+                    data: 'measuring_range',
+                    name: 'measuring_range'
+                },
+                {
+                    data: 'report_no',
+                    name: 'report_no'
+                },
+                {
+                    data: 'date_cal',
+                    name: 'date_cal'
+                },
+                {
+                    data: 'next_cal',
+                    name: 'next_cal'
+                },
+                {
+                    data: 'disposition',
+                    name: 'disposition'
+                },
+                {
+                    data: 'approved_by',
+                    name: 'approved_by'
+                },
+                {
+                    data: 'checked_by',
+                    name: 'checked_by'
+                },
+                {
+                    data: 'rejected_reason',
+                    name: 'rejected_reason'
+                },
+                {
+                    data: 'action',
+                    name: 'action',
+                    orderable: false,
+                    searchable: false
+                }
             ]
         });
 
@@ -124,13 +184,13 @@
                     $('#error11').val(data.error12);
                     $('#error12').val(data.error12);
                 },
-                error : function() {
+                error: function() {
                     alert("Nothing Data");
                 }
             });
         }
 
-        function deleteData(id){
+        function deleteData(id) {
             var csrf_token = $('meta[name="csrf-token"]').attr('content');
             swal({
                 title: 'Are you sure?',
@@ -140,12 +200,15 @@
                 cancelButtonColor: '#d33',
                 confirmButtonColor: '#3085d6',
                 confirmButtonText: 'Yes, delete it!'
-            }).then(function () {
+            }).then(function() {
                 $.ajax({
-                    url : "{{ url('digitalcaliper') }}" + '/' + id,
-                    type : "POST",
-                    data : {'_method' : 'DELETE', '_token' : csrf_token},
-                    success : function(data) {
+                    url: "{{ url('digitalcaliper') }}" + '/' + id,
+                    type: "POST",
+                    data: {
+                        '_method': 'DELETE',
+                        '_token': csrf_token
+                    },
+                    success: function(data) {
                         table.ajax.reload();
                         swal({
                             title: 'Success!',
@@ -154,7 +217,7 @@
                             timer: '1500'
                         })
                     },
-                    error : function () {
+                    error: function() {
                         swal({
                             title: 'Oops...',
                             text: data.message,
@@ -166,25 +229,25 @@
             });
         }
 
-        $(function(){
-            $('#modal-form form').validator().on('submit', function (e) {
-                if (!e.isDefaultPrevented()){
+        $(function() {
+            $('#modal-form form').validator().on('submit', function(e) {
+                if (!e.isDefaultPrevented()) {
                     var id = $('#id').val();
                     if (save_method == 'add') url = "{{ url('digitalcaliper') }}";
                     else url = "{{ url('digitalcaliper') . '/' }}" + id;
                     $.ajaxSetup({
-                                    headers: {
-                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                                }
-                            });
-   
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        }
+                    });
+
                     $.ajax({
-                        url : url,
-                        type : "POST",
+                        url: url,
+                        type: "POST",
                         data: new FormData($("#modal-form form")[0]),
                         contentType: false,
                         processData: false,
-                        success : function(data) {
+                        success: function(data) {
                             $('#modal-form').modal('hide');
                             table.ajax.reload();
                             swal({
@@ -194,7 +257,7 @@
                                 timer: '2000'
                             })
                         },
-                        error : function(data){
+                        error: function(data) {
                             swal({
                                 title: 'Oops...',
                                 text: data.message,
@@ -207,6 +270,41 @@
                 }
             });
         });
-    </script>
 
+        function rejectData(id) {
+            $('#modal-rejection-reason').modal('show');
+            $('#submit-rejection-reason').click(function() {
+                var reason = $('#rejected_reason').val();
+                var csrf_token = $('meta[name="csrf-token"]').attr('content');
+
+                $.ajax({
+                    url: "{{ url('digitalcaliper') }}" + '/' + id + "/reject",
+                    type: "GET",
+                    data: {
+                        '_method': 'GET',
+                        '_token': "{{ csrf_token() }}",
+                        'rejected_reason': reason
+                    },
+                    success: function(data) {
+                        $('#modal-rejection-reason').modal('hide');
+                        table.ajax.reload();
+                        swal({
+                            title: 'Success!',
+                            text: data.message,
+                            type: 'success',
+                            timer: '1500'
+                        })
+                    },
+                    error: function() {
+                        swal({
+                            title: 'Oops...',
+                            text: 'Something went wrong!',
+                            type: 'error',
+                            timer: '1500'
+                        })
+                    }
+                });
+            });
+        }
+    </script>
 @endsection

@@ -39,18 +39,20 @@ Route::get('/exportUsers','UserController@exportUsersAll')->name('exportPDF.user
 Route::resource('digitalcaliper','DigitalCaliperController');
 Route::get('/apiDigitalCaliper','DigitalCaliperController@apiDigitalCalipers')->name('api.digitalcaliper');
 Route::get('/digitalcaliper/{id}/approved','DigitalCaliperController@approved')->name('approved');
-Route::get('/digitalcaliper/{id}/reject','DigitalCaliperController@reject')->name('reject');
+Route::get('/digitalcaliper/{id}/reject', 'DigitalCaliperController@rejectData')->name('reject');
+
+
 //---------------------------------------------------------------------------------------------------------------
 Route::resource('threadgauge','ThreadGaugeController');
 Route::get('/apiThreadGauge','ThreadGaugeController@apiThreadGauges')->name('api.threadgauge');
 Route::get('/threadgauge/{id}/approved','ThreadGaugeController@approved')->name('approved');
-Route::get('/threadgauge/{id}/reject','ThreadGaugeController@reject')->name('reject');
+Route::get('/threadgauge/{id}/reject','ThreadGaugeController@rejectData')->name('reject');
 //---------------------------------------------------------------------------------------------------------------
 
 Route::resource('outsidedial','OutsideDialController');
 Route::get('/apiOutsideDial','OutsideDialController@apiOutsideDials')->name('api.outsidedial');
 Route::get('/outsidedial/{id}/approved','OutsideDialController@approved')->name('approved');
-Route::get('/outsidedial/{id}/reject','OutsideDialController@reject')->name('reject');
+Route::get('/outsidedial/{id}/reject','OutsideDialController@rejectData')->name('reject');
 //---------------------------------------------------------------------------------------------------------------
 Route::resource('masterlist','MasterListController');
 Route::get('/apiMasterList','MasterListController@apiMasterLists')->name('api.masterlist');

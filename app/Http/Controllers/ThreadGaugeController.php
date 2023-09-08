@@ -107,6 +107,17 @@ class ThreadGaugeController extends Controller
         return redirect('/threadgauge')->with('sukses');
     }
 
+    public function rejectData($id)
+    {
+        $data = ThreadGauge::find($id);
+        $data->disposition = 'reject';
+        $data->rejected_reason = request('rejected_reason');
+        $data->save();
+
+        return response()->json(['message' => 'Data rejected successfully']);
+         // Redirect the user back to the previous page
+    }
+
 
     public function apiThreadGauges(){
         $data = ThreadGauge::all();
@@ -116,7 +127,7 @@ class ThreadGaugeController extends Controller
             if(auth()->user()->role=="admin"){
                     return 
                   '<a href="/threadgauge/'.$data->id.'/approved" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-ok"></i> Approved</a> ' .
-                   '<a href="/threadgauge/'.$data->id.'/reject" class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-remove"></i> Reject</a> ' .      
+                  '<a href="/threadgauge/' . $data->id . '/reject" class="btn btn-danger btn-xs" onclick="rejectData(' . $data->id . ')"><i class="glyphicon glyphicon-remove"></i> Reject</a> ' .  
                     '<a onclick="editForm('. $data->id .')" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i> Edit</a> ' .
                     '<a onclick="deleteData('. $data->id .')" class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-trash"></i> Delete</a>';
                 } else{
